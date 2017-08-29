@@ -56,6 +56,7 @@ nl:
         topic_closed_error: "Gebeurt wanneer een antwoord is ontvangen, maar het verwante topic is gesloten."
         bounced_email_error: "E-mail is een gebouncet e-mailrapport."
         screened_email_error: "Gebeurt wanneer het e-mailadres van de afzender al was gecontroleerd."
+      unrecognized_error: "Onbekende Fout"
   errors: &errors
     format: '%{attribute} %{message}'
     messages:
@@ -171,6 +172,7 @@ nl:
   too_many_links:
     one: "Sorry, nieuwe gebruikers kunnen maar één koppeling in een bericht plaatsen."
     other: "Sorry, nieuwe gebruikers kunnen maar %{count} koppelingen in een bericht plaatsen."
+  contains_blocked_words: "Je bericht bevat woorden die niet zijn toegestaan."
   spamming_host: "Sorry, u kunt geen koppeling naar die host plaatsen."
   user_is_suspended: "Geschorste gebruikers mogen geen berichten plaatsen."
   topic_not_found: "Er is iets fout gegaan. Misschien is het topic gesloten of verwijderd terwijl u het bekeek?"
@@ -207,6 +209,7 @@ nl:
     user_posts: "Nieuwste berichten van @%{username}"
     user_topics: "Nieuwste topics van @%{username}"
     tag: "Gemarkeerde onderwerpen"
+    badge: "%{display_name} badge op %{site_title}"
   too_late_to_edit: "Dat bericht is te lang geleden geschreven. Het kan niet meer worden gewijzigd of verwijderd."
   revert_version_same: "De huidige versie is dezelfde als de versie die u probeert terug te zetten."
   excerpt_image: "afbeelding"
@@ -318,6 +321,7 @@ nl:
               too_many_users: "U kunt alleen waarschuwingen naar één gebruiker tegelijk sturen."
               cant_send_pm: "Sorry, u kunt geen privébericht naar die gebruiker sturen."
               no_user_selected: "U moet een geldige gebruiker selecteren."
+              reply_by_email_disabled: "Antwoorden met een email is uitgeschakeld."
             featured_link:
               invalid: "is ongeldig. URL moet http:// of https:// bevatten."
               invalid_category: "kan niet worden bewerkt in deze categorie."
@@ -346,6 +350,10 @@ nl:
           attributes:
             name:
               taken: wordt al door een andere emoji gebruikt
+        topic_timer:
+          attributes:
+            execute_at:
+              in_the_past: "moet in de toekomst zijn."
       <<: *errors
   user_profile:
     no_info_me: "<div class='missing-profile'>het veld Over mij van uw profiel is momenteel leeg; <a href='/u/%{username_lower}/preferences/about-me'>zou u dit willen invullen?</a></div>"
@@ -407,6 +415,7 @@ nl:
       invalid_email_in: "'%{email}' is geen geldig e-mailadres."
       email_already_used_in_group: "'%{email}' wordt al gebruikt door de groep '%{group_name}'."
       email_already_used_in_category: "'%{email}' wordt al gebruikt door de categorie '%{category_name}'."
+      description_incomplete: "De categorie beschrijving moet minimaal een paragraaf hebben."
     cannot_delete:
       uncategorized: "Ongecategoriseerd kan niet worden verwijderd"
       has_subcategories: "Deze categorie kan niet worden verwijderd, omdat deze subcategorieën bevat"
@@ -562,9 +571,11 @@ nl:
     off_topic:
       title: 'Off-topic'
       description: 'Dit bericht is niet relevant voor de huidige discussie zoals beschreven door de titel en het eerste bericht, en dient wellicht naar een ander topic te worden verplaatst.'
+      short_description: 'Niet relevant voor de discussie'
       long_form: 'heeft dit als off-topic gemarkeerd'
     spam:
       title: 'Spam'
+      description: 'Dit bericht is een advertentie of vandalisme. Het is niet relevant voor het huidige onderwerp.'
       long_form: 'heeft dit als spam gemarkeerd'
       email_title: '''%{title}'' is als spam gemarkeerd'
       email_body: "%{link}\n\n%{message}"
@@ -846,9 +857,7 @@ nl:
     educate_until_posts: "Laat de popup voor nieuwe gebruikers zien als een gebruiker start met het typen van hun eerste (n) nieuwe berichten in de berichtopsteller."
     title: "De naam van deze site, wordt gebruikt in de titeltag"
     site_description: "Omschrijf de site in één zin. Deze wordt getoond in de meta-omschrijvingstag."
-    contact_email: "E-mailadressen van een contactpersonen van deze site. Belangrijke updates, zoals onbehandelde meldingen, maar ook berichten van het /about contactformulier worden naar dit adres gestuurd."
     contact_url: "Contact URL voor deze site. Wordt gebruikt op het /about contactformulier voor dringende zaken."
-    queue_jobs: "DEVELOPERS ONLY! WARNING! Zet verschillende taken in een queue binnen sidekiq, bij 'false' worden taken ineens uitgevoerd"
     crawl_images: "Haal afbeeldingen van externe URLs om de correcte breedte- en hoogtedimensies in te voegen"
     download_remote_images_to_local: "Download externe afbeeldingen en sla ze lokaal op. Dit voorkomt dat afbeeldingen niet meer beschikbaar zouden kunnen worden."
     download_remote_images_threshold: "Minimum schijfruimte vereist om externe afbeeldingen lokaal te downloaden (percentage)"
@@ -863,7 +872,6 @@ nl:
     fixed_category_positions: "Wanneer aangevinkt, kunt u categorieën in een vaste volgorde schikken. Wanneer niet aangevinkt, worden categorieën op activiteit vermeld."
     fixed_category_positions_on_create: "Wanneer aangevinkt, wordt de categorievolgorde bij het maken van een topic aangehouden (vereist fixed_category_positions)."
     add_rel_nofollow_to_user_content: "Voeg 'rel nofollow' toe aan alle ingediende gebruikerscontent, behalve voor interne links (inclusief bovenliggende domeinen). Als je dit verandert, moet je ook alle berichten opnieuw renderen met: \"rake posts:rebake\""
-    exclude_rel_nofollow_domains: "Een lijst van domeinen waar ´nofollow´ niet aan de links moet worden toegevoegd. (voorbeelddomein.com staat automatisch sub.voorbeelddomein toe). Voeg minimaal het 'top-level' domein van deze site toe om web crawlers alle content te laten vinden. Als delen van deze site zich op andere domeinen bevinden, voeg deze eveneens toe."
     post_excerpt_maxlength: "Maximale lengte van een uittreksel / samenvatting van een bericht."
     post_onebox_maxlength: "Maximale lengte van een 'oneboxed Discourse' bericht in tekens."
     max_oneboxes_per_post: "Maximale aantal Oneboxes in een bericht."
@@ -927,8 +935,6 @@ nl:
     log_out_strict: "Bij het afmelden ALLE sessies voor de gebruiker op alle apparaten afmelden"
     version_checks: "Ping de Discourse-Hub voor updates en laat meldingen van nieuwe versies zien op het dashboard van de beheerder."
     new_version_emails: "Stuur een email naar het contact_email adres wanneer een nieuwe versie van Discourse beschikbaar is."
-    port: "DEVELOPER ONLY! WARNING! Mocht je een specifieke poort willen toewijzen aan de URL. Handig in ontwikkelaars-modus. Laat leeg voor geen toewijzing."
-    force_hostname: "DEVELOPER ONLY! WARNING! Mocht je een specifieke hostname willen toewijzen. Handig in ontwikkelaars-modus. Laat leeg voor geen toewijzing."
     invite_expiry_days: "Hoe lang uitnodigingscodes geldig blijven (in dagen)."
     invite_passthrough_hours: "Hoe lang een gebruiker een eerder verkregen uitnodigingssleutel kan gebruiken om in te loggen, in uren gespecificeerd"
     invite_only: "Openbare registratie is uitgeschakeld; alle nieuwe gebruikers moeten expliciet worden uitgenodigd door stafleden."
@@ -994,7 +1000,6 @@ nl:
     clean_up_uploads: "Verwijder weesbestanden zonder referentie om illegale hosting te voorkomen. LET OP: maak een back-up van je /uploads directory voordat je deze instelling aanzet."
     clean_orphan_uploads_grace_period_hours: "Na hoeveel uur een weesbestand voor verwijderding gemarkeerd wordt."
     purge_deleted_uploads_grace_period_days: "Na hoeveel uur een weesbestand definitief verwijderd wordt."
-    purge_unactivated_users_grace_period_days: "Respijtperiode (in dagen) voordat een gebruiker die het account niet heeft geactiveerd wordt verwijderd."
     enable_s3_uploads: "Uploads plaatsen op Amazon S3 storage. LET OP: vereist geldige S3 inloggegevens (zowel acces key id als secret access key)"
     s3_use_iam_profile: 'Gebruik AWS EC2 IAM rol om keys binnen te halen. LET OP: na inschakelen dit gebruikt i.p.v. de instellingen voor "s3 access key id" en "s3 secret access key".'
     s3_upload_bucket: "De naam van de Amazon S3 bucket waar bestanden naar worden geüpload. LET OP: moet bestaan uit kleine letters, zonder puntjes en geen underscores."
@@ -1148,15 +1153,9 @@ nl:
     default_code_lang: "Standaard programmeertaal die gebruikt wordt voor syntax highlighting van GitHub codeblokken (lang-auto, ruby, python etc.)"
     warn_reviving_old_topic_age: "Wanneer iemand begint met antwoorden op een topic waar het laatste antwoord ouder is dan dit aantal dagen, zal er een waarschuwing worden weergegeven. Kan worden uitsgechakeld door op 0 te zetten."
     autohighlight_all_code: "Forceer het toepassen van code highlighting bij alle opgemaakte code blokken, zelfs als de codetaal niet expliciet is opgeven."
-    feed_polling_enabled: "ALLEEN INSLUITEN: Het al of niet insluiten van een RSS / ATOM-feed als berichten."
-    feed_polling_url: "ALLEEN INSLUITEN: URL van de RSS/ATOM feed om in te sluiten."
-    embed_by_username: "Discourse gebruikersnaam van de gebruiker die de ingesloten topics aanmaakt."
-    embed_username_key_from_feed: "Sleutel waarmee de discourse gebruikersnaam uit de feed kan worden gehaald."
     embed_truncate: "Kort de geembedde berichten in"
     embed_post_limit: "Maximale aantal te embedden berichten."
     embed_username_required: "De gebruikersnaam om topics aan te maken is vereist."
-    embed_whitelist_selector: "CSS-selector voor de elementen die zijn toegestaan in invoegberichten."
-    embed_blacklist_selector: "CSS-selector voor de elementen die zijn verwijderd uit invoegberichten."
     notify_about_flags_after: "Als er na dit aantal uren markeringen zijn die nog niet zijn afgehandeld, een privébericht naar stafleden sturen. Gebruik 0 om dit uit te schakelen."
     show_create_topics_notice: "Als de site minder dan 5 publieke topics heeft, toon dan een melding waarin admins gevraagd wordt om een aantal topics te creëren."
     delete_drafts_older_than_n_days: Verwijder concepten ouder dan (n) dagen.
@@ -1388,7 +1387,6 @@ nl:
     csv_export_failed:
       title: "CSV Export Mislukt"
       subject_template: "Export mislukt"
-      text_body_template: "Het spijt ons, maar de export is mislukt. Bekijk de logbestanden of neem contact op met de staf."
     email_reject_inactive_user:
       text_body_template: |
         Het spijt ons, maar het plaatsen van je e-mail op %{destination} (met onderwerp %{former_title}) is niet gelukt.
@@ -1399,16 +1397,6 @@ nl:
         Het spijt ons, maar het plaatsen van je e-mail op %{destination} (met onderwerp %{former_title}) is niet gelukt.
 
         Het account dat bij dit e-mailadres hoort, is geblokkeerd.
-    email_reject_reply_user_not_matching:
-      text_body_template: |
-        Het spijt ons, maar het plaatsen van je e-mail op %{destination} (met onderwerp %{former_title}) is niet gelukt.
-
-        Je reactie werd verstuurd van een ander e-mailadres dan we verwacht hadden, dus we weten niet zeker of dit dezelfde persoon is. Probeer de e-mail vanaf een ander adres te sturen, of neem contact op met de staf.
-    email_reject_no_account:
-      text_body_template: |
-        Het spijt ons, maar het plaatsen van je e-mail op %{destination} (met onderwerp %{former_title}) is niet gelukt.
-
-        We konden geen accounts vinden die overeenkomen met je e-mailadres. Probeer de e-mail van een ander adres te sturen, of neem contact op met de staf.
     email_reject_empty:
       text_body_template: |+
         Het spijt ons, maar het plaatsen van uw e-mailbericht naar %{destination} (getiteld %{former_title}) is niet gelukt.
@@ -1442,16 +1430,6 @@ nl:
         Het spijt ons, maar het plaatsen van je e-mail op %{destination} (met onderwerp %{former_title}) is niet gelukt.
 
         De plaatsingsactie werd niet herkend. Probeer het opnieuw of plaats je bericht via de website als het nog steeds niet lukt.
-    email_reject_reply_key:
-      text_body_template: |
-        Het spijt ons, maar het plaatsen van je e-mail op %{destination} (met onderwerp %{former_title}) is niet gelukt.
-
-        De antwoordsleutel in de e-mail is ongeldig of onbekend, dus we weten niet waar deze e-mail een reactie op is. Neem contact op met de staf.
-    email_reject_bad_destination_address:
-      text_body_template: |
-        Het spijt ons, maar het plaatsen van je e-mail op %{destination} (met onderwerp %{former_title}) is niet gelukt.
-
-        Geen van de bestemmingsadressen werd herkend. Zorg ervoor dat je je e-mail naar het juiste door de staf verstrekte e-mailadres stuurt.
     blocked_by_staff:
       subject_template: "Account tijdelijk geblokkeerd"
     user_automatically_blocked:
@@ -1523,10 +1501,6 @@ nl:
     see_more: "Meer"
     search_title: "Zoeken op deze website"
     search_google: "Google"
-  login_required:
-    welcome_message: |
-      #[Welkom op %{title}](#welcome)
-      Voor dit forum is een account nodig. Maak een account aan of log in om verder te gaan.
   terms_of_service:
     title: "Servicevoorwaarden"
     signup_form_message: 'Ik heb de <a href="/tos" target="_blank">Servicevoorwaarden</a> gelezen en ga hiermee akkoord.'
@@ -1641,7 +1615,6 @@ nl:
         title: "Emoji"
       invites:
         title: "Staf uitnodigen"
-        description: "U bent bijna klaar! Nodig wat stafleden uit om te helpen met <a href='https://blog.discourse.org/2014/08/building-a-discourse-community/' target='blank'>het starten van discussies</a> met interessante topics en berichten om uw gemeenschap op te zetten."
       finished:
         title: "Uw Discourse is gereed!"
         description: |

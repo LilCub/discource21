@@ -6,10 +6,20 @@
 # https://www.transifex.com/projects/p/discourse-org/
 
 nl:
+  badges:
+    certified:
+      name: Gecertificeerd
+      description: "Doorloop onze tutorial voor nieuwe gebruikers"
   discourse_narrative_bot:
+    bio: "Hallo, ik ben geen echt persoon. Ik ben een bot die jou uitleg geeft over deze website. Om met mij te communiceren, stuur me een bericht of vermeld mij **`@%{discobot_username}`** ergens."
+    dice:
+      trigger: "gooi"
+      invalid: |-
+        Sorry, het is wiskundig onmogelijk om die combinatie te gooien. :confounded:
     quote:
       trigger: "quote"
       '1':
+        quote: "In the middle of every difficulty lies opportunity"
         author: "Albert Einstein"
       '2':
         author: "Mahatma Gandhi"
@@ -27,3 +37,29 @@ nl:
         author: "Eleanor Roosevelt"
       '9':
         author: "Bruce Lee"
+    magic_8_ball:
+      trigger: 'lot'
+      answers:
+        '1': "Het is zeker"
+        '2': "Het is zo besloten"
+        '3': "Zonder twijfel"
+        '4': "Ja zeker"
+        '5': "Daar kun je van uit gaan"
+        '6': "Zoals ik het zie, ja"
+        '7': "Zeer waarschijnlijk"
+        '9': "Ja"
+        '10': "Alle signalen wijzen naar ja"
+        '12': "Vraag later nogmaals"
+        '13': "Beter om je dat nu niet te vertellen"
+        '14': "Kan nu niet voorspellen"
+        '15': "Concentreer je en vraag opnieuw"
+        '16': "Reken er niet op"
+        '17': "Mijn antwoord is nee"
+        '18': "Mijn bronnen zeggen nee"
+        '20': "Zeer onwaarschijnlijk"
+    track_selector:
+      reset_trigger: 'start'
+      skip_trigger: 'overslaan'
+      help_trigger: 'help weergeven'
+    new_user_narrative:
+      reset_trigger: "nieuwe gebruiker"

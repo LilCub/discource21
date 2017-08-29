@@ -353,7 +353,6 @@ nl:
         add_members: "Leden toevoegen"
         delete_member_confirm: "'%{username}' uit de groep '%{group}' verwijderen?"
       name_placeholder: "Groepsnaam, geen spaties, hetzelfde als gebruikersnaamregel"
-      public: "Gebruikers toestaan om bij groepen aan te melden of deze te verlaten (Groep moet hiervoor publiekelijk zichtbaar zijn)"
       empty:
         posts: "Er zijn geen berichten van leden van deze groep."
         members: "Er zijn geen leden in deze groep."
@@ -395,7 +394,6 @@ nl:
         staff: "Groepseigenaars en -personeel"
         owners: "Groepeigenaars en -beheerders"
       alias_levels:
-        title: "Wie kan deze groep een bericht sturen en taggen?"
         nobody: "Niemand"
         only_admins: "Alleen beheerders"
         mods_and_admins: "Alleen moderators en beheerders"
@@ -1197,9 +1195,6 @@ nl:
       select_all: "Alles selecteren"
       clear_all: "Alles wissen"
       too_short: "Uw zoekterm is te kort."
-      result_count:
-        one: "1 resultaat voor <span class='term'>'{{term}}'</span>"
-        other: "{{count}} resultaten voor <span class='term'>'{{term}}'</span>"
       title: "zoeken naar topics, berichten, gebruikers of categorieën"
       no_results: "Geen resultaten gevonden."
       no_more_results: "Geen resultaten meer gevonden."
@@ -2134,7 +2129,6 @@ nl:
         hamburger_menu: '<b>=</b> Hamburgermenu openen'
         user_profile_menu: '<b>p</b> Gebruikersmenu openen'
         show_incoming_updated_topics: '<b>.</b> Bijgewerkte topics tonen'
-        search: '<b>/</b> Zoeken'
         help: '<b>?</b> Hulp voor sneltoetsen openen'
         dismiss_new_posts: '<b>x</b>, <b>r</b> Nieuwe/Berichten negeren'
         dismiss_topics: '<b>x</b>, <b>t</b> Topics negeren'
@@ -3287,9 +3281,6 @@ nl:
       upload: "Uploaden"
       uploading: "Uploaden..."
       quit: "Misschien later"
-      staff_count:
-        one: "Uw gemeenschap heeft 1 staflid."
-        other: "Jouw community heeft %{count} stafleden."
       invites:
         add_user: "toevoegen"
         none_added: "Je hebt geen stafleden uitgenodigd. Weet je zeker dat je verder wilt gaan?"

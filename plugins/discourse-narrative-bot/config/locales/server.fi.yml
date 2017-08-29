@@ -163,12 +163,6 @@ fi:
           - https://en.wikipedia.org/wiki/Calculator_spelling
         reply: |-
           Siistiä! Suurin osa <img src="%{base_uri}/images/font-awesome-link.png" width="16" height="16"> linkeistä käyttäytyy samoin. Muista, että sen tulee olla _yksin omalla rivillään_; mitään ei saa olla rivillä ennen sitä tai sen jälkeen.
-        not_found: |-
-          Voi ei, en löytänyt linkkiä vastauksestasi! :cry:
-
-          Kokeilepa lisätä tämä linkki seuraavaan vastaukseesi, omalle rivilleen.
-
-          - https://fi.wikipedia.org/wiki/Eksoottinen_lyhytkarva
       images:
         instructions: |-
           Tämä on kuva yksisarvisesta:
