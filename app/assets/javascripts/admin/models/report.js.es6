@@ -1,8 +1,9 @@
+import RestModel from 'discourse/models/rest';
 import { ajax } from 'discourse/lib/ajax';
 import round from "discourse/lib/round";
 import { fmt } from 'discourse/lib/computed';
 
-const Report = Discourse.Model.extend({
+const Report = RestModel.extend({
   reportUrl: fmt("type", "/admin/reports/%@"),
 
   valueAt(numDaysAgo) {

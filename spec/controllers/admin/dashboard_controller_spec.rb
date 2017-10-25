@@ -24,7 +24,9 @@ describe Admin::DashboardController do
           get :index, format: :json
 
           expect(response).to be_success
-          expect(JSON.parse(response.body)['version_check']).to be_present
+          json = JSON.parse(response.body)
+
+          expect(json['dashboard']['version_check']).to be_present
         end
       end
 
@@ -36,7 +38,7 @@ describe Admin::DashboardController do
         it 'does not return discourse version info' do
           get :index, format: :json
           json = JSON.parse(response.body)
-          expect(json['version_check']).not_to be_present
+          expect(json['dashboard']['version_check']).not_to be_present
         end
       end
     end
@@ -52,7 +54,7 @@ describe Admin::DashboardController do
 
           expect(response).to be_success
           json = JSON.parse(response.body)
-          expect(json['problems'].size).to eq(0)
+          expect(json['dashboard_problems'].size).to eq(0)
         end
       end
 
@@ -63,12 +65,24 @@ describe Admin::DashboardController do
 
         it 'returns an array of strings' do
           get :problems, format: :json
+          expect(response).to be_success
           json = JSON.parse(response.body)
-          expect(json['problems'].size).to eq(2)
-          expect(json['problems'][0]).to be_a(String)
-          expect(json['problems'][1]).to be_a(String)
+          expect(json['dashboard_problems'].size).to eq(2)
+          expect(json['dashboard_problems'][0]['id']).to be_present
+          expect(json['dashboard_problems'][0]['description']).to eq('Not enough awesome')
+          expect(json['dashboard_problems'][1]['id']).to be_present
+          expect(json['dashboard_problems'][1]['description']).to eq('Too much sass')
         end
       end
+    end
+  end
+
+  context 'while logged in as a moderator' do
+    let!(:mod) { log_in(:moderator) }
+
+    it 'problems returns invalid access' do
+      get :problems, format: :json
+      expect(response).to_not be_success
     end
   end
 end

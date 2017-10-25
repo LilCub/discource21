@@ -1,0 +1,24 @@
+<table class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      {{#if title}}
+        <th class='title' title={{i18n description}}>
+          {{#if icon}}{{d-icon icon}}{{/if}}
+          {{i18n title}}
+        </th>
+      {{else}}
+        <th>&nbsp;</th>
+      {{/if}}
+      <th>{{i18n 'admin.dashboard.reports.today'}}</th>
+      <th>{{i18n 'admin.dashboard.reports.yesterday'}}</th>
+      <th>{{i18n 'admin.dashboard.reports.last_7_days'}}</th>
+      <th>{{i18n 'admin.dashboard.reports.last_30_days'}}</th>
+      <th>{{i18n 'admin.dashboard.reports.all'}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each reports as |r|}}
+      {{admin-report-counts report=r}}
+    {{/each}}
+  </tbody>
+</table>

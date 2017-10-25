@@ -1,0 +1,22 @@
+<div class="dashboard-stats">
+  <table class="table table-condensed table-hover">
+    <thead>
+      <tr>
+        <th class="title">{{source.title}} ({{i18n 'admin.dashboard.reports.last_30_days'}})</th>
+        <th>{{source.ytitles.num_clicks}}</th>
+        {{#if source.ytitles.num_topics}}
+          <th>{{source.ytitles.num_topics}}</th>
+        {{/if}}
+      </tr>
+    </thead>
+    {{#each source.data as |row|}}
+      <tr>
+        <td class="title">{{yield row}}</td>
+        <td class="value">{{number row.num_clicks}}</td>
+        {{#if source.ytitles.num_topics}}
+          <td class="value">{{number row.num_topics}}</td>
+        {{/if}}
+      </tr>
+    {{/each}}
+  </table>
+</div>

@@ -2,8 +2,8 @@
 
 {{#conditional-loading-spinner condition=loading}}
   <div class="dashboard-left">
-    {{#if showVersionChecks}}
-      {{partial 'admin/templates/version-checks'}}
+    {{#if siteSettings.version_checks}}
+      {{version-checks tagName="" versionCheck=dashboard.versionCheck}}
     {{/if}}
 
     <div class="dashboard-stats trust-levels">
@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each user_reports as |r|}}
+          {{#each dashboard.user_reports as |r|}}
             {{admin-report-trust-level-counts report=r}}
           {{/each}}
         </tbody>
@@ -30,98 +30,34 @@
       <table>
         <tr>
           <td class="title">{{d-icon "shield"}} {{i18n 'admin.dashboard.admins'}}</td>
-          <td class="value">{{#link-to 'adminUsersList.show' 'admins'}}{{admins}}{{/link-to}}</td>
+          <td class="value">{{#link-to 'adminUsersList.show' 'admins'}}{{dashboard.admins}}{{/link-to}}</td>
           <td class="title">{{d-icon "ban"}} {{i18n 'admin.dashboard.suspended'}}</td>
-          <td class="value">{{#link-to 'adminUsersList.show' 'suspended'}}{{suspended}}{{/link-to}}</td>
+          <td class="value">{{#link-to 'adminUsersList.show' 'suspended'}}{{dashboard.suspended}}{{/link-to}}</td>
         </tr>
         <tr>
           <td class="title">{{d-icon "shield"}} {{i18n 'admin.dashboard.moderators'}}</td>
-          <td class="value">{{#link-to 'adminUsersList.show' 'moderators'}}{{moderators}}{{/link-to}}</td>
+          <td class="value">{{#link-to 'adminUsersList.show' 'moderators'}}{{dashboard.moderators}}{{/link-to}}</td>
           <td class="title">{{d-icon "ban"}} {{i18n 'admin.dashboard.blocked'}}</td>
-          <td class="value">{{#link-to 'adminUsersList.show' 'blocked'}}{{blocked}}{{/link-to}}</td>
+          <td class="value">{{#link-to 'adminUsersList.show' 'blocked'}}{{dashboard.blocked}}{{/link-to}}</td>
         </tr>
       </table>
     </div>
 
-    <div class="dashboard-stats">
-      <table class="table table-condensed table-hover">
-        <thead>
-          <tr>
-            <th>&nbsp;</th>
-            <th>{{i18n 'admin.dashboard.reports.today'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.yesterday'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_7_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_30_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.all'}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each global_reports as |r|}}
-            {{admin-report-counts report=r}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+    {{dashboard-reports reports=dashboard.global_reports}}
 
-    <div class="dashboard-stats">
-      <table class="table table-condensed table-hover">
-        <thead>
-          <tr>
-            <th class="title" title="{{i18n 'admin.dashboard.page_views'}}">{{i18n 'admin.dashboard.page_views_short'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.today'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.yesterday'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_7_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_30_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.all'}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each page_view_reports as |r|}}
-            {{admin-report-counts report=r}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+    {{dashboard-reports
+      reports=dashboard.global_reports
+      title="admin.dashboard.page_views_short"}}
 
-    <div class="dashboard-stats">
-      <table class="table table-condensed table-hover">
-        <thead>
-          <tr>
-            <th class="title" title="{{i18n 'admin.dashboard.private_messages_title'}}">{{d-icon "envelope"}} {{i18n 'admin.dashboard.private_messages_short'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.today'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.yesterday'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_7_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_30_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.all'}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each private_message_reports as |r|}}
-            {{admin-report-counts report=r}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+    {{dashboard-reports
+      reports=dashboard.private_message_reports
+      description="admin.dashboard.private_messages_title"
+      icon="envelope"
+      title="admin.dashboard.private_messages_short"}}
 
-    <div class="dashboard-stats">
-      <table class="table table-condensed table-hover">
-        <thead>
-          <tr>
-            <th class="title" title="{{i18n 'admin.dashboard.mobile_title'}}">{{i18n 'admin.dashboard.mobile_title'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.today'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.yesterday'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_7_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_30_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.all'}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each mobile_reports as |r|}}
-            {{admin-report-counts report=r}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+    {{dashboard-reports
+      reports=dashboard.mobile_reports
+      title="admin.dashboard.mobile_title"}}
 
     <div class="dashboard-stats">
       <table class="table table-condensed table-hover">
@@ -136,36 +72,36 @@
         <tbody>
           <tr>
             <td>{{i18n 'admin.dashboard.uploads'}}</td>
-            <td>{{disk_space.uploads_used}} ({{i18n 'admin.dashboard.space_free' size=disk_space.uploads_free}})</td>
+            <td>{{dashboard.disk_space.uploads_used}} ({{i18n 'admin.dashboard.space_free' size=dashboard.disk_space.uploads_free}})</td>
             <td>{{#if currentUser.admin}}<a href="/admin/backups">{{i18n 'admin.dashboard.backups'}}</a>{{/if}}</td>
-            <td>{{disk_space.backups_used}} ({{i18n 'admin.dashboard.space_free' size=disk_space.backups_free}})</td>
+            <td>{{dashboard.disk_space.backups_used}} ({{i18n 'admin.dashboard.space_free' size=dashboard.disk_space.backups_free}})</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     {{#if showTrafficReport}}
-    <div class="dashboard-stats">
-      <table class="table table-condensed table-hover">
-        <thead>
-          <tr>
-            <th class="title" title="{{i18n 'admin.dashboard.traffic'}}">{{i18n 'admin.dashboard.traffic_short'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.today'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.yesterday'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_7_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.last_30_days'}}</th>
-            <th>{{i18n 'admin.dashboard.reports.all'}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#unless loading}}
-            {{#each http_reports as |r|}}
-              {{admin-report-counts report=r}}
-            {{/each}}
-          {{/unless}}
-        </tbody>
-      </table>
-    </div>
+      <div class="dashboard-stats">
+        <table class="table table-condensed table-hover">
+          <thead>
+            <tr>
+              <th class="title" title="{{i18n 'admin.dashboard.traffic'}}">{{i18n 'admin.dashboard.traffic_short'}}</th>
+              <th>{{i18n 'admin.dashboard.reports.today'}}</th>
+              <th>{{i18n 'admin.dashboard.reports.yesterday'}}</th>
+              <th>{{i18n 'admin.dashboard.reports.last_7_days'}}</th>
+              <th>{{i18n 'admin.dashboard.reports.last_30_days'}}</th>
+              <th>{{i18n 'admin.dashboard.reports.all'}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#unless loading}}
+              {{#each dashboard.http_reports as |r|}}
+                {{admin-report-counts report=r}}
+              {{/each}}
+            {{/unless}}
+          </tbody>
+        </table>
+      </div>
     {{else}}
       <div class="dashboard-stats">
         <a href {{action 'showTrafficReport'}}>{{i18n 'admin.dashboard.show_traffic_report'}}</a>
@@ -174,113 +110,29 @@
   </div>
 
   <div class="dashboard-right">
-    {{#if foundProblems}}
-      <div class="dashboard-stats detected-problems">
-        <div class="look-here">{{d-icon "exclamation-triangle"}}</div>
-        <div class="problem-messages">
-          {{#conditional-loading-spinner condition=loadingProblems}}
-            <p>
-              {{i18n 'admin.dashboard.problems_found'}}
-              <ul class="{{if loadingProblems 'invisible'}}">
-                {{#each problems as |problem|}}
-                  <li>{{{problem}}}</li>
-                {{/each}}
-              </ul>
-            </p>
-            <p class="actions">
-              <small>{{i18n 'admin.dashboard.last_checked'}}: {{problemsTimestamp}}</small>
-              {{d-button action="refreshProblems" class="btn-small" icon="refresh" label="admin.dashboard.refresh_problems"}}
-            </p>
-          {{/conditional-loading-spinner}}
-        </div>
-        <div class="clearfix"></div>
-      </div>
-    {{else}}
-      {{#if thereWereProblems}}
-        <div class="dashboard-stats detected-problems">
-          <div class="look-here">&nbsp;</div>
-          <div class="problem-messages">
-            <p>
-              {{i18n 'admin.dashboard.no_problems'}}
-              {{d-button action="refreshProblems" class="btn-small" icon="refresh" label="admin.dashboard.refresh_problems"}}
-            </p>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-      {{/if}}
+    {{#if currentUser.admin}}
+      {{dashboard-problems}}
     {{/if}}
 
-    <div class="dashboard-stats">
-      <table class="table table-condensed table-hover">
-        <thead>
-          <tr>
-            <th class="title">{{top_referred_topics.title}} ({{i18n 'admin.dashboard.reports.last_30_days'}})</th>
-            <th>{{top_referred_topics.ytitles.num_clicks}}</th>
-          </tr>
-        </thead>
-        {{#each top_referred_topics.data as |data|}}
-          <tbody>
-            <tr>
-              <td class="title">
-                <div class="referred-topic-title">
-                  <div class="overflow-ellipsis">
-                    <a href="/t/{{unbound data.topic_slug}}/{{unbound data.topic_id}}">{{data.topic_title}}</a>
-                  </div>
-                </div>
-              </td>
-              <td class="value">{{number data.num_clicks}}</td>
-            </tr>
-          </tbody>
-        {{/each}}
-      </table>
-    </div>
+    {{#stats-table source=dashboard.top_referred_topics as |row|}}
+      <div class="referred-topic-title overflow-ellipsis">
+        <a href="/t/{{unbound row.topic_slug}}/{{unbound row.topic_id}}">{{row.topic_title}}</a>
+      </div>
+    {{/stats-table}}
 
-    <div class="dashboard-stats">
-      <table class="table table-condensed table-hover">
-        <thead>
-          <tr>
-            <th class="title">{{top_traffic_sources.title}} ({{i18n 'admin.dashboard.reports.last_30_days'}})</th>
-            <th>{{top_traffic_sources.ytitles.num_clicks}}</th>
-            <th>{{top_traffic_sources.ytitles.num_topics}}</th>
-          </tr>
-        </thead>
-        {{#each top_traffic_sources.data as |s|}}
-          <tbody>
-            <tr>
-              <td class="title">{{s.domain}}</td>
-              <td class="value">{{number s.num_clicks}}</td>
-              <td class="value">{{number s.num_topics}}</td>
-            </tr>
-          </tbody>
-        {{/each}}
-      </table>
-    </div>
+    {{#stats-table source=dashboard.top_traffic_sources as |row|}}
+      {{row.domain}}
+    {{/stats-table}}
 
-    <div class="dashboard-stats">
-      <table class="table table-condensed table-hover">
-        <thead>
-          <tr>
-            <th class="title">{{top_referrers.title}} ({{i18n 'admin.dashboard.reports.last_30_days'}})</th>
-            <th>{{top_referrers.ytitles.num_clicks}}</th>
-            <th>{{top_referrers.ytitles.num_topics}}</th>
-          </tr>
-        </thead>
-        {{#each top_referrers.data as |r|}}
-          <tbody>
-            <tr>
-              <td class="title">{{#link-to 'adminUser' r.user_id r.username}}{{unbound r.username}}{{/link-to}}</td>
-              <td class="value">{{number r.num_clicks}}</td>
-              <td class="value">{{number r.num_topics}}</td>
-            </tr>
-          </tbody>
-        {{/each}}
-      </table>
-    </div>
+    {{#stats-table source=dashboard.top_referrers as |row|}}
+      {{#link-to 'adminUser' row.user_id row.username}}{{row.username}}{{/link-to}}
+    {{/stats-table}}
   </div>
+
   <div class='clearfix'></div>
 
   <div class="dashboard-stats pull-right">
-    <div class="pull-right">{{i18n 'admin.dashboard.last_updated'}} {{updatedTimestamp}}</div>
+    <div class="pull-right">{{i18n 'admin.dashboard.last_updated'}} {{moment dashboard.updated_at format="LLL"}}</div>
     <div class='clearfix'></div>
   </div>
   <div class='clearfix'></div>
