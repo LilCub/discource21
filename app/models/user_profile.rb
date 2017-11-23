@@ -138,5 +138,3 @@ end
 #
 #  index_user_profiles_on_bio_cooked_version  (bio_cooked_version)
 #  index_user_profiles_on_card_background     (card_background)
-#  index_user_profiles_on_profile_background  (profile_background)
-#
